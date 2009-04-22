@@ -1,12 +1,13 @@
 ---
 name: POE-Component-Client-Icecast
-version: 0.1
+version: 0.11
 author:
   - 'Anatoly Sharifulin <sharifulin@gmail.com>'
 abstract: non-blocking client to Icecast server for getting tags
 license: perl
 resources:
   license: http://dev.perl.org/licenses/
+  repository: http://github.com/sharifulin/poe-component-client-icecast/tree
 requires:
   Carp: 0
   POE::Component::Client::HTTP: 0
@@ -18,8 +19,12 @@ build_requires:
 provides:
   POE::Component::Client::Icecast:
     file: lib/POE/Component/Client/Icecast.pm
-    version: 0.1
+    version: 0.11
 generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
+keywords:
+  - POE
+  - PoCo
+  - Icecast

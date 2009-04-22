@@ -7,7 +7,8 @@ use POE qw(Component::Client::Icecast);
 use Data::Dumper;
 
 POE::Component::Client::Icecast->new(
-	Stream  => 'http://station20.ru:8000/station-128',
+	Stream    => 'http://station20.ru:8000/station-128',
+	
 	# Path          => '/station-128',
 	# Host          => 'station20.ru',
 	# 
@@ -16,7 +17,9 @@ POE::Component::Client::Icecast->new(
 	# BindPort      => 8103, # for only one permanent client
 	# BindAddress   => '87.242.82.108',
 	
-	GetTags => sub {
+	Reconnect => 10,
+	
+	GetTags   => sub {
 		warn Dumper $_[ARG0];
 	},
 );

@@ -1,5 +1,8 @@
 Revision history for POE-Component-Client-Icecast
 
-0.1    2009-04-13/14:28
+0.11   2009-04-21 12:18
+	Add Reconnect flag
+
+0.1    2009-04-13 14:28
 	First release
 

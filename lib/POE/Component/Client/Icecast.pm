@@ -10,7 +10,7 @@ use POE::Component::Client::TCP;
 use constant TRACE => $ENV{'ICECAST_TRACE'} || 0;
 use constant DEBUG => $ENV{'ICECAST_DEBUG'} || 0;
 
-our $VERSION = 0.1;
+our $VERSION = 0.11;
 
 sub new {
 	my $type   = shift;
@@ -53,10 +53,19 @@ sub new {
 			}
 		},
 		
-		'ServerError'   => sub { carp  "$mi has error:  ", join('  ', @_[ARG0..$#_]) },
-		'ConnectError'  => sub { croak "$mi has error:  ", join('  ', @_[ARG0..$#_]) },
+		'Disconnected'  => sub {
+			DEBUG && warn "$mi disconnected";
+			
+			if ($param->{'Reconnect'}) {
+				DEBUG && warn "$mi will reconnect, delay is $param->{'Reconnect'}";
+				$_[KERNEL]->delay('reconnect' => $param->{'Reconnect'});
+			}
+		},
 		
-		'SessionParams'  => [ 'options' => { 'trace' => TRACE } ],
+		'ConnectError'  => sub { croak "$mi has connect error:  ", join('  ', @_[ARG0..$#_]) },
+		'ServerError'   => sub { carp  "$mi has server  error:  ", join('  ', @_[ARG0..$#_]) },
+		
+		'SessionParams' => [ 'options' => { 'trace' => TRACE } ],
 	) or croak "$mi has error: $!";
 }
 
@@ -90,8 +99,9 @@ POE::Component::Client::Icecast - non-blocking client to Icecast server for gett
     use Data::Dumper;
     
     POE::Component::Client::Icecast->new(
-        Stream  => 'http://station20.ru:8000/station-128',
-        GetTags => sub {
+        Stream    => 'http://station20.ru:8000/station-128',
+        Reconnect => 10,
+        GetTags   => sub {
             warn Dumper $_[ARG0];
         },
     );
@@ -106,7 +116,9 @@ POE::Component::Client::Icecast - non-blocking client to Icecast server for gett
         RemotePort    => 8000,
         BindPort      => 8103, # for only one permanent client
         
-        GetTags => sub {
+        Reconnect     => 10,
+        
+        GetTags       => sub {
             warn Dumper $_[ARG0];
         },
     );
@@ -148,7 +160,7 @@ POE::Component::Client::Icecast is based on L<POE::Component::Client::TCP>.
 
 PoCo::Client::Icecast's new method takes a few named parameters:
 
-=over 8
+=over 9
 
 =item * I<Stream>
 
@@ -189,6 +201,11 @@ It's a param of L<POE::Component::Client::TCP>.
 The event of getting tags from server, it is called for each fully parsed input record from Icecast server.
 
 I<$_[ARG0]> contains a hashref of tags.
+
+=item * I<Reconnect>
+
+The flag of reconnect to Icecast server. If this flag exists, client will reconnect to server when an established socket has been disconnected.
+Delay is value of this param (in seconds). Default value is 0 (no reconnect).
 
 =back
 

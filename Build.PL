@@ -18,6 +18,16 @@ my $builder = Module::Build->new(
 		'POE::Session' => 0,
 		'Carp' => 0,
 	},
+	meta_merge => {
+		resources => {
+			repository => 'http://github.com/sharifulin/poe-component-client-icecast/tree',
+		},
+		keywords => [
+			'POE',
+			'PoCo',
+			'Icecast'
+		],
+	},
 	add_to_cleanup      => [],
 	create_makefile_pl => 'traditional',
 );
