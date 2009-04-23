@@ -1,12 +1,11 @@
 Build.PL
 Changes
-META.yml
 MANIFEST
 README
 lib/POE/Component/Client/Icecast.pm
+examples/test.pl
 t/00-load.t
 t/pod-coverage.t
 t/pod.t
-examples/test.pl
 Makefile.PL
 META.yml

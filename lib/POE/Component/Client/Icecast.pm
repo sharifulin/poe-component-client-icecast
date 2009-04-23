@@ -10,7 +10,7 @@ use POE::Component::Client::TCP;
 use constant TRACE => $ENV{'ICECAST_TRACE'} || 0;
 use constant DEBUG => $ENV{'ICECAST_DEBUG'} || 0;
 
-our $VERSION = 0.11;
+our $VERSION = 0.12;
 
 sub new {
 	my $type   = shift;
@@ -280,4 +280,3 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
-

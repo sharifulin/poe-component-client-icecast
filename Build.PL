@@ -25,7 +25,7 @@ my $builder = Module::Build->new(
 		keywords => [
 			'POE',
 			'PoCo',
-			'Icecast'
+			'Icecast',
 		],
 	},
 	add_to_cleanup      => [],
