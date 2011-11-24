@@ -1,7 +1,7 @@
 Build.PL
 Changes
 MANIFEST
-README
+README.pod
 lib/POE/Component/Client/Icecast.pm
 examples/test.pl
 t/00-load.t
